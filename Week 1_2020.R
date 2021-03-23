@@ -15,7 +15,7 @@ profitData$isFirstHeading <- ifelse(grepl(heading1, profitData$Item, perl = TRUE
 profitData$isSecondHeading <- ifelse(grepl(heading2, profitData$Item, perl = TRUE), 1, 0)
 
 
-# label the levels/groups
+# label the levels/groups ----
 profitData$firstLevel <- substr(profitData$Item, start = 1, stop = 1)
 
 # if not 1st or 2nd level, take first 3 chars as group identifier
@@ -31,7 +31,7 @@ profitData[profitData$isSecondHeading == 1, "Profit"] <- tapply(profitData$Profi
 
 
 
-# Leading Spaces
+# Leading Spaces ----
 
 profitData$Item <- with(profitData, ifelse(!isFirstHeading == 1 & !isSecondHeading == 1,
                                            sprintf(paste0("%", nchar(Item)+10, "s"), Item),
@@ -42,7 +42,7 @@ profitData$Item <- with(profitData, ifelse(isSecondHeading == 1,
                                            Item)) # 5 spaces for X.X items
 
 
-# Write Output (csv will screw up leading whitespaces)
+# Write Output (csv will screw up leading whitespaces) ----
 profitData <- profitData[,c("Item", "Profit")]
 
 write.table(profitData, "PD 2020 WK 1 Output.txt", sep = "\t", row.names = FALSE)
